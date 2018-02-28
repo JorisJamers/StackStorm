@@ -1,0 +1,11 @@
+---
+description: Run the disk full workflow
+enabled: true
+runner_type: mistral-v2
+entry_point: workflows/delete_files.yaml
+name: delete_files
+pack: fenego
+parameters:
+  ip:
+    required: true
+    type: string

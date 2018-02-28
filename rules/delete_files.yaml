@@ -1,0 +1,15 @@
+---
+    name: "Custom_Rule_To_Delete_Files"
+    pack: "fenego"
+    description: "Custom made rule delete files on critical server."
+    enabled: true
+
+    trigger:
+        type: "core.st2.webhook"
+        parameters:
+            url: "diskfull"
+
+    action:
+        ref: "fenego.delete_files"
+        parameters:
+            ip: "{{ trigger.body.title.split(' ')[1] }}"

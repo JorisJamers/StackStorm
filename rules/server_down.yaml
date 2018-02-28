@@ -1,0 +1,15 @@
+---
+    name: "Custom_Rule_Notify_Slack_On_Down_Server"
+    pack: "fenego"
+    description: "Custom made rule to notify slack when the server is down."
+    enabled: true
+
+    trigger:
+        type: "core.st2.webhook"
+        parameters:
+            url: "down"
+
+    action:
+        ref: "fenego.server_down"
+        parameters:
+            host: "{{trigger.body.host}}"

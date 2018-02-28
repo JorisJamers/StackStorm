@@ -1,0 +1,11 @@
+---
+description: Notify slack that a server is down.
+enabled: true
+runner_type: mistral-v2
+entry_point: workflows/server_down.yaml
+name: server_down
+pack: fenego
+parameters:
+  host:
+    required: true
+    type: string

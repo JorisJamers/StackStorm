@@ -1,0 +1,15 @@
+---
+    name: "Custom_Rule_Start_Nginx_Flex_Python"
+    pack: "fenego"
+    description: "Custom made rule to restart NGINX when down."
+    enabled: true
+
+    trigger:
+        type: "core.st2.webhook"
+        parameters:
+            url: "nginx"
+
+    action:
+        ref: "fenego.nginx-flex-python"
+        parameters:
+            ip: "{{trigger.body.title}}"

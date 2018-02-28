@@ -1,0 +1,20 @@
+version: '2.0'
+
+fenego.delete_files:
+    description: A workflow that deletes files and.
+    type: direct
+    input:
+        - ip
+    tasks:
+        delete_files:
+            action: core.remote cmd="sudo rm -rf /home/centos/deletethesefiles/*" username="centos" private_key="/home/centos/keys/web.pem" hosts="<% $.ip %>"
+            on-success:
+              - notify_slack_success
+            on-error:
+              - notify_slack_error
+
+        notify_slack_success:
+            action: slack.chat.postMessage channel="#stackstorm" text="The files on server <% $.ip %> are deleted." token="xoxp-278700655542-277831759842-310831064241-9e06e6332dc7a1f490e2a6c189c76a27" username="STACKSTORM"
+
+        notify_slack_error:
+            action: slack.chat.postMessage channel="#stackstorm" text="The files on server <% $.ip %> are not deleted." token="xoxp-278700655542-277831759842-310831064241-9e06e6332dc7a1f490e2a6c189c76a27" username="STACKSTORM"

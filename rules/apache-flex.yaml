@@ -1,0 +1,15 @@
+---
+    name: "Custom_Rule_Start_Apache_flex"
+    pack: "fenego"
+    description: "Custom made rule to restart apache when down."
+    enabled: true
+
+    trigger:
+        type: "core.st2.webhook"
+        parameters:
+            url: "apache"
+
+    action:
+        ref: "fenego.apache-flex"
+        parameters:
+            ip: "{{trigger.body.title}}"

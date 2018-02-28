@@ -1,0 +1,34 @@
+version: '2.0'
+
+fenego.nginx-flex-python:
+    description: A workflow that heals the NGINX with a variable IP.
+    type: direct
+    input:
+        - ip
+    tasks:
+        check_counter:
+            action: core.local cmd="python /opt/stackstorm/packs/fenego/scripts/nginx-flex-python.py"
+            on-succes:
+              - restart_nginx
+            on-error:
+              - notify_slack_error_count
+
+        restart_nginx:
+            action: core.remote cmd="sudo systemctl start nginx" username="centos" private_key="/home/centos/keys/web.pem" hosts="<% $.ip %>"
+
+        status_check:
+            action: core.http url="http://<% $.ip %>"
+            wait-before: 4
+            on-success:
+                - notify_slack_success
+            on-error:
+                - notify_slack_error
+
+        notify_slack_success:
+            action: slack.chat.postMessage channel="#stackstorm" text="The NGINX webserver on <% $.ip %> just healed perfectly." token="xoxp-278700655542-277831759842-310831064241-9e06e6332dc7a1f490e2a6c189c76a27" username="STACKSTORM"
+
+        notify_slack_error:
+            action: slack.chat.postMessage channel="#stackstorm" text="The NGINX webserver on <% $.ip %> needs attention." token="xoxp-278700655542-277831759842-310831064241-9e06e6332dc7a1f490e2a6c189c76a27" username="STACKSTORM"
+
+        notify_slack_error_count:
+            action: slack.chat.postMessage channel="#stackstorm" text="It's the 3rd time in 10 minutes that this triggers on <% $.ip %>, there might be something very wrong." token="xoxp-278700655542-277831759842-310831064241-9e06e6332dc7a1f490e2a6c189c76a27" username="STACKSTORM"

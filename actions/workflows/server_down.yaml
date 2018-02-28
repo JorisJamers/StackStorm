@@ -1,0 +1,21 @@
+version: '2.0'
+
+fenego.server_down:
+    description: A workflow that notifies slack that a server with variable IP is down.
+    type: direct
+    input:
+        - host
+    tasks:
+
+        spawn_server:
+            action: core.remote cmd="ansible-playbook /home/centos/Fenego_AnsibleScripts/Deploy<% $.host %>.yml" timeout=300 username="centos" private_key="/home/centos/keys/ansible.pem" hosts="10.0.32.7"
+            on-success:
+              - notify_slack_success
+            on-error:
+              - notify_slack_error
+
+        notify_slack_success:
+            action: slack.chat.postMessage channel="#stackstorm" text="Seems like the <% $.host %> server with ip <% $.ip %> is down. But we have already deployed a new one." token="xoxp-278700655542-277831759842-310831064241-9e06e6332dc7a1f490e2a6c189c76a27" username="STACKSTORM"
+
+        notify_slack_error:
+            action: slack.chat.postMessage channel="#stackstorm" text="Seems like the <% $.host %> server with ip <% $.ip %> is down. And I didn't manage to deploy a new one." token="xoxp-278700655542-277831759842-310831064241-9e06e6332dc7a1f490e2a6c189c76a27" username="STACKSTORM"

@@ -1,0 +1,7 @@
+---
+description: Run a local linux command
+enabled: true
+runner_type: mistral-v2
+entry_point: workflows/nginx-demo.yaml
+name: nginx-demo
+pack: fenego

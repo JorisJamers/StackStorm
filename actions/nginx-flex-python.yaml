@@ -1,0 +1,8 @@
+---
+name: nginx-flex-python
+runner_type: python-script
+description: Print message to standard output.
+enabled: true
+entry_point: scripts/nginx-flex-python.py
+name: nginx-flex-python
+pack: fenego

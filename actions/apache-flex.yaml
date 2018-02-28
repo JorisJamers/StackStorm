@@ -1,0 +1,11 @@
+---
+description: Restart Apache
+enabled: true
+runner_type: mistral-v2
+entry_point: workflows/apache-flex.yaml
+name: apache-flex
+pack: fenego
+parameters:
+  ip:
+    required: true
+    type: string
