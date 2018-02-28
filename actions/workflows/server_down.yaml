@@ -15,7 +15,7 @@ fenego.server_down:
               - notify_slack_error
 
         notify_slack_success:
-            action: slack.chat.postMessage channel="#stackstorm" text="Seems like the <% $.host %> server with ip <% $.ip %> is down. But we have already deployed a new one." token="xoxp-278700655542-277831759842-310831064241-9e06e6332dc7a1f490e2a6c189c76a27" username="STACKSTORM"
+            action: slack.chat.postMessage channel="#stackstorm" text="Seems like the <% $.host %> server with ip <% $.ip %> is down. But we have already deployed a new one." token="INSERT_TOKEN_HERE" username="STACKSTORM"
 
         notify_slack_error:
-            action: slack.chat.postMessage channel="#stackstorm" text="Seems like the <% $.host %> server with ip <% $.ip %> is down. And I didn't manage to deploy a new one." token="xoxp-278700655542-277831759842-310831064241-9e06e6332dc7a1f490e2a6c189c76a27" username="STACKSTORM"
+            action: slack.chat.postMessage channel="#stackstorm" text="Seems like the <% $.host %> server with ip <% $.ip %> is down. And I didn't manage to deploy a new one." token="INSERT_TOKEN_HERE" username="STACKSTORM"
