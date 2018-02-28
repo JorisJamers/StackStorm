@@ -1,1 +1,1 @@
-# Stackstorm Workflows 
+# Stackstorm actions, workflows & rules 
